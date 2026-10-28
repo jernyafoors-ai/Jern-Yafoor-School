@@ -2,12 +2,15 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-const REPO_NAME = 'zeniaford-assets'
-
 export default defineConfig(({ command }) => {
+  // Automatically extract repository name from GitHub Actions env (e.g., 'Jern-Yafoor-School')
+  const repoName = process.env.GITHUB_REPOSITORY
+    ? process.env.GITHUB_REPOSITORY.split('/')[1]
+    : 'Jern-Yafoor-School'
+
   // Use repository base path during production build (GitHub Pages)
-  // Use '/' during local development so localhost:5173 works seamlessly without white screens
-  const base = command === 'build' ? `/${REPO_NAME}/` : '/'
+  // Use '/' during local development
+  const base = command === 'build' ? `/${repoName}/` : '/'
 
   return {
     base,
